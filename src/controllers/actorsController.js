@@ -42,19 +42,36 @@ module.exports = {
         })
     },
     create: (req, res) => {
-        const { first_name, last_name, rating, favorite_movie_id} = req.body;
-        db.Actor.create({
-            first_name,
-            last_name,
-            rating,
-            favorite_movie_id
-        })
-        .then(() => {
-            res.redirect('/actors')
-        })
-        .catch(err => {
-            res.send(err.message)
-        })
+        const { validationResult } = require('express-validator');
+        const errors = validationResult(req);
+
+        if(errors.isEmpty()) {
+            const { first_name, last_name, rating, favorite_movie_id} = req.body;
+            db.Actor.create({
+                first_name,
+                last_name,
+                rating,
+                favorite_movie_id
+            })
+            .then(() => {
+                res.redirect('/actors')
+            })
+            .catch(err => {
+                res.send(err.message)
+            })
+        } else {
+            db.Movie.findAll()
+            .then(movies => {
+                return res.render('actors/actorsAdd', {
+                    movies,
+                    old: req.body,
+                    errors: errors.mapped()
+                })
+            })
+            .catch(err => {
+                res.send(err.message)
+            })
+        }
     },
     edit: (req, res) => {
         const { id } = req.params;

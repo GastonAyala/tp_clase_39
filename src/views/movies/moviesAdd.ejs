@@ -15,25 +15,67 @@
     <br>
     <section class="formulario">
         <form action="/movies/create" method="POST">
+
             <label for="title">Title </label>
-            <p><input type="text" name="title" id="" required></p>
+            <p><input type="text" name="title" id="" value="<%= locals.old?.title %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.title?.msg %> 
+                </div>
+            <% } %>
+
             <label for="rating">Rating </label>
-            <p><input type="number" name="rating" id="" required> </p>
+            <p><input type="text" name="rating" id="" value="<%= locals.old?.rating %>"> </p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.rating?.msg %> 
+                </div>
+            <% } %>
+
+
             <label for="awards">Awards </label>
-            <p><input type="number" name="awards" id="" required></p>
+            <p><input type="number" name="awards" id="" value="<%= locals.old?.awards %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.awards?.msg %> 
+                </div>
+            <% } %>
+
+
             <label for="release_date">Release date </label>
-            <p><input type="date" name="release_date" id="" required></p>
+            <p><input type="date" name="release_date" id="" value="<%= locals.old?.release_date %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.release_date?.msg %> 
+                </div>
+            <% } %>
+
+
             <label for="length">Length </label>
-            <p><input type="number" name="length" id="" required></p>
+            <p><input type="number" name="length" id="" value="<%= locals.old?.length %>"></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.length?.msg %> 
+                </div>
+            <% } %>
+
+
             <label for="genreID">Genre </label>
             <p>
-                <select name="genre_id" id="" required>
+                <select name="genre_id" id="" >
                     <option value="" disabled selected>- select genre - </option>
                     <% allGenres.forEach(genre => { %>
                     <option value="<%= genre.id %>"><%= genre.name %></option>
                     <% }); %>
                 </select>
             </p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.genre_id?.msg %> 
+                </div>
+            <% } %>
+
+
             <br>
             <p> <button class="botonAgregar" type="submit">Agregar</button>
             

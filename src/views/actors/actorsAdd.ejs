@@ -17,21 +17,41 @@
         <form action="/actors/create" method="POST">
 
             <label for="first_name">First name</label>
-            <p><input type="text" name="first_name" id="" required></p>
+            <p><input type="text" name="first_name" id="" value="<%= locals.old?.first_name %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.first_name?.msg %> 
+                </div>
+            <% } %>
 
             <label for="last_name">Last name </label>
-            <p><input type="text" name="last_name" id="" required></p>
+            <p><input type="text" name="last_name" id="" value="<%= locals.old?.last_name %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.last_name?.msg %> 
+                </div>
+            <% } %>
 
             <label for="rating">Rating</label>
-            <p><input type="number" name="rating" id="" required> </p>
+            <p><input type="text" name="rating" id="" value="<%= locals.old?.rating %>"> </p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.rating?.msg %> 
+                </div>
+            <% } %>
 
             <label for="awards">Awards</label>
-            <p><input type="number" name="awards" id="" required></p>
+            <p><input type="number" name="awards" id="" value="<%= locals.old?.awards %>"></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.awards?.msg %> 
+                </div>
+            <% } %>
             <br>
 
             <label for="favorite_movie">Favorite Movie</label>
             <p>
-                <select name="favorite_movie_id" id="" required>
+                <select name="favorite_movie_id" id="" >
                     <option value="" disabled selected>- select movie - </option>
                     <% movies.forEach(m => { %>
                     <option value="<%= m.id %>"><%= m.title %></option>

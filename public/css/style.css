@@ -43,3 +43,8 @@ figure{
   margin: auto;
   width: 20%;
 }
+
+.error {
+  color: red;
+  font-weight: bold;
+}

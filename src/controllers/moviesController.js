@@ -67,22 +67,33 @@ const { Op } = require("sequelize");
         })
     },
     create: (req,res)  => {
-        const { title, rating, awards, release_date, length, genre_id } = req.body;
-        db.Movie.create({
-            title,
-            rating,
-            length,
-            awards,
-            release_date,
-            genre_id
-        })
-        .then(() => {
-            res.redirect('/movies')
-        })
-        .catch(err => {
-            res.send(err.message)
-        })
-        
+        const { validationResult } = require('express-validator');
+        const errors = validationResult(req);
+        if (errors.isEmpty()) {
+            const { title, rating, awards, release_date, length, genre_id } = req.body;
+            db.Movie.create({
+                title,
+                rating,
+                length,
+                awards,
+                release_date,
+                genre_id
+            })
+            .then(() => {
+                res.redirect('/movies')
+            })
+            .catch(err => {
+                res.send(err.message)
+            })
+        } else {
+            db.Genre.findAll()
+            .then(allGenres => {
+                return res.render('movies/moviesAdd', { allGenres, old: req.body, errors: errors.mapped() })
+            })
+            .catch(err => {
+                res.send(err.message)
+            })
+        }
     },
     edit: (req, res) => {
         const { id } = req.params;
@@ -100,28 +111,49 @@ const { Op } = require("sequelize");
     },
     update: (req, res)  => {
         const { id } = req.params;
-
         const { title, rating, awards, release_date, length, genre_id } = req.body;
+        const { validationResult } = require('express-validator');
+        const errors = validationResult(req);
+        if(errors.isEmpty()) {
+            db.Movie.update(
+                {
+                    title,
+                    rating,
+                    length,
+                    awards,
+                    release_date,
+                    genre_id
+                },
+                {
+                    where: {id}
+                }
+            )
+            .then(() => {
+                res.redirect('/movies')
+            })
+            .catch(err => {
+                res.send(err.message)
+            })
+        } else {
+            db.Movie.findByPk(id)
+            .then((Movie) => {
+                db.Genre.findAll()
+                .then(allGenres => {
+                    return res.render('movies/moviesEdit', {
+                        Movie,
+                        allGenres,
+                        old: req.body,
+                        id,
+                        errors: errors.mapped()
+                    })
+                })
+                .catch(err => {
+                    res.send(err.message)
+                })
+            })
+            
+        }
         
-        db.Movie.update(
-            {
-                title,
-                rating,
-                length,
-                awards,
-                release_date,
-                genre_id
-            },
-            {
-                where: {id}
-            }
-        )
-        .then(() => {
-            res.redirect('/movies')
-        })
-        .catch(err => {
-            res.send(err.message)
-        })
     },
     delete: (req, res)  => {
         const { id } = req.params;

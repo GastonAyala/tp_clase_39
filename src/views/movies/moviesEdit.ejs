@@ -13,16 +13,47 @@
     <h1 class="titulo">Película Editada:  <%= Movie.title %></h1>
     <section class="formulario">
         <form action="/movies/update/<%= Movie.id %>?_method=PUT" method="POST">
+
             <label for="title">Title </label>
-            <p><input type="text" name="title" id="" value="<%= Movie.title %>" required></p>
+            <p><input type="text" name="title" id="" value="<%= locals.errors? locals.old.title : Movie.title %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.title?.msg %> 
+                </div>
+            <% } %>
+
             <label for="rating">Rating </label>
-            <p><input type="number" name="rating" id="" value="<%= Movie.rating %>" required></p>
+            <p><input type="text" name="rating" id="" value="<%= locals.errors? locals.old.rating : Movie.rating %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.rating?.msg %> 
+                </div>
+            <% } %>
+
             <label for="awards">Awards </label>
-            <p><input type="number" name="awards" id="" value="<%= Movie.awards %>" required></p>
+            <p><input type="number" name="awards" id="" value="<%= locals.errors? locals.old.awards : Movie.awards %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.awards?.msg %> 
+                </div>
+            <% } %>
+
             <label for="release_date">Release date </label>
-            <p><input type="date" name="release_date" id="" value="<%= Movie.release_date.toISOString().split('T')[0] %>" required></p>
+            <p><input type="date" name="release_date" id="" value="<%= locals.errors? locals.old.release_date : Movie.release_date.toISOString().split('T')[0] %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.release_date?.msg %> 
+                </div>
+            <% } %>
+
             <label for="length">Length </label>
-            <p><input type="number" name="length" id="" value="<%= Movie.length %>" required></p>
+            <p><input type="number" name="length" id="" value="<%= locals.errors? locals.old.length : Movie.length %>" ></p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.length?.msg %> 
+                </div>
+            <% } %>
+
             <label for="genre_id">Genre </label>
             <p>
                 <select name="genre_id" id="" required>
@@ -31,6 +62,11 @@
                     <% }); %>
                 </select>
             </p>
+            <% if (locals.errors) { %>
+                <div class="error"> 
+                    <%= locals.errors?.genre_id?.msg %> 
+                </div>
+            <% } %>
             
             <br>
             <p> <button class="botonAgregar" type="submit">Actualizar</button>
