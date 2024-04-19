@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actor add</title>
+    <link rel='stylesheet' href='/css/style.css' />
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+    
+    <h1 class="titulo">Agregar Actor</h1>
+    <br>
+    <section class="formulario">
+        <form action="/actors/create" method="POST">
+
+            <label for="first_name">First name</label>
+            <p><input type="text" name="first_name" id="" required></p>
+
+            <label for="last_name">Last name </label>
+            <p><input type="text" name="last_name" id="" required></p>
+
+            <label for="rating">Rating</label>
+            <p><input type="number" name="rating" id="" required> </p>
+
+            <label for="awards">Awards</label>
+            <p><input type="number" name="awards" id="" required></p>
+            <br>
+
+            <label for="favorite_movie">Favorite Movie</label>
+            <p>
+                <select name="favorite_movie_id" id="" required>
+                    <option value="" disabled selected>- select movie - </option>
+                    <% movies.forEach(m => { %>
+                    <option value="<%= m.id %>"><%= m.title %></option>
+                    <% }); %>
+                </select>
+            </p>
+            <br>
+
+            <p> <button class="botonAgregar" type="submit">Agregar</button>
+            
+            <a  class="botonVolver" href="/actors">Listado de Actores</a></p>
+        </form>
+    </section>
+    
+</body>
+
+</html>

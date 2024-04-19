@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= actor.first_name %> <%= actor.last_name %> </title>
+    <link rel='stylesheet' href='/css/style.css' />
+
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <h1><%= actor.first_name %> <%= actor.last_name %> </h1>    
+    <br>
+    <p>FIRST NAME: <%= actor.first_name %> </p>
+    <br>
+    <p>LAST NAME: <%= actor.last_name %> </p>
+    <br>
+    <p>RATING: <%= actor.rating %> </p>
+    <br>
+    
+    <p>FAVORITE MOVIE: <% movies.forEach(m => { %> 
+        <% if (actor.favorite_movie_id  === m.id ) { %>
+        <a href="/movies/detail/<%= m.id %>"><%=  m.title %></a>   
+        <% } %>
+    <% }) %> </p>
+    <br>
+    <p> ACTED IN MOVIE:
+        <% actor.movie.forEach(m => { %>
+            <a href="/movies/detail/<%= m.id %>">
+                <%= m.title + " |" %> 
+            </a>
+        <% }) %> 
+    </p>
+
+    <br>
+    <br>
+    <section>
+        <a  class="botonModificar" href="/actors/edit/<%= actor.id %>">Modificar</a>
+        <a  class="botonBorrar" href="/actors/delete/<%= actor.id %>">Borrar</a>
+            
+        <a class="botonVolver" href="/actors">Listado de Actores</a>
+    </section>
+
+</body>
+</html>
